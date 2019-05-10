@@ -130,18 +130,35 @@ def summary(url):
     tmp_summary = soup.select(
         '#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div.story_area > p'
     )
+    if (tmp_summary):
+        summary = tmp_summary[0]
+        # print(summary.text)
+        # print(summary.text.split('\r\xa0'))
+        summary = summary.text.replace('\r\xa0', ' ')
+        print(summary)
+    else:
+        summary = ''
+    # f_summary.write(summary + "\n")
 
-    summary = tmp_summary[0]
-    print(summary)
-    # f_summary.write(summary)
-    # f_summary.write("\n")
+def image_url(url):
+    req = requests.get(url)
+    html = req.text
+    soup = BeautifulSoup(html, 'html.parser')
+    tmp_image_url = soup.select(
+        '#content > div > div.mv_info_area > div.poster > a'
+    )[0]
+    img_url = tmp_image_url.select('img')[0].get('src')
+    print(img_url)
+    f_image_url.write(img_url + '\n')
+
 
 # f_genre_id = open("./genre_id.txt", 'a')
 # f_open_date = open("./open_date.txt", 'a')
 # f_director = open("./director.txt", 'a')
 # f_actors = open("./actors.txt", "a")
 # f_grade = open("./grade.txt", "a")
-f_summary = open("./summary.txt", 'a', -1, "utf-8")
+# f_summary = open("./summary.txt", 'a', -1, "utf-8")
+f_image_url = open("./imageurl.txt", 'a')
 for url in sys.stdin:
     try:
         url = str(url[:-1])
@@ -153,7 +170,8 @@ for url in sys.stdin:
         # director(url)
         # actors(url)
         # grade(url)
-        summary(url)
+        # summary(url)
+        image_url(url)
 
     except StopIteration:
         print("EOF")
@@ -163,9 +181,10 @@ for url in sys.stdin:
 # f_director.close()
 # f_actors.close()
 # f_grade.close()
-f_summary.close()
+# f_summary.close()
+f_image_url.close()
 
 # url = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=61823"
 #
-# url = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=151196"
-# summary(url)
+# url = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=171539"
+# image_url(url)
