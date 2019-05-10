@@ -130,7 +130,7 @@ def summary(url):
     tmp_summary = soup.select(
         '#content > div.article > div.section_group.section_group_frst > div:nth-child(1) > div > div.story_area > p'
     )
-    pprint.pprint(tmp_summary)
+
     summary = tmp_summary[0]
     print(summary)
     # f_summary.write(summary)
