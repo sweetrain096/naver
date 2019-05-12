@@ -87,6 +87,14 @@ def director(url):
     print(director)
     # f_director.write(director+ '\n')
 
+def printactors(lists):
+    for actor in lists :
+        print(actor)
+    print(len(lists), len(set(lists)))
+
+
+
+actorsAll = []
 def actors(url):
     req = requests.get(url)
     html = req.text
@@ -95,14 +103,21 @@ def actors(url):
         '#content > div.article > div.mv_info_area > div.mv_info > dl > dd:nth-child(6) > p'
     )
     # print(tmp_actors)
-    actors = []
+    actorsnumber = []
     if tmp_actors:
         for actor in tmp_actors[0].select('a'):
-            actors.append(actor.text)
-        actors = ', '.join(actors)
-        print(actors)
-    else:
-        print(actors)
+            ac = actor.text
+            if ac not in actorsAll :
+                actorsAll.append(ac)
+            actorsnumber.append(actorsAll.index(ac)+1)
+    print(actorsnumber)
+        # print('-----')
+        # actors = ', '.join(actors)
+        # print(actors)
+    # else:
+        # print(actors)
+
+
     # f_actors.write(actors+"\n")
 
 def grade(url):
@@ -149,16 +164,16 @@ def image_url(url):
     )[0]
     img_url = tmp_image_url.select('img')[0].get('src')
     print(img_url)
-    f_image_url.write(img_url + '\n')
+    # f_image_url.write(img_url + '\n')
 
 
 # f_genre_id = open("./genre_id.txt", 'a')
 # f_open_date = open("./open_date.txt", 'a')
 # f_director = open("./director.txt", 'a')
-# f_actors = open("./actors.txt", "a")
+f_actors = open("./actors.txt", "a")
 # f_grade = open("./grade.txt", "a")
 # f_summary = open("./summary.txt", 'a', -1, "utf-8")
-f_image_url = open("./imageurl.txt", 'a')
+# f_image_url = open("./imageurl.txt", 'a')
 for url in sys.stdin:
     try:
         url = str(url[:-1])
@@ -168,21 +183,22 @@ for url in sys.stdin:
         # find_genre_id(url)
         # open_date(url)
         # director(url)
-        # actors(url)
+        actors(url)
         # grade(url)
         # summary(url)
-        image_url(url)
+        # image_url(url)
 
     except StopIteration:
         print("EOF")
 
+printactors(actorsAll)
 # f_genre_id.close()
 # f_open_date.close()
 # f_director.close()
-# f_actors.close()
+f_actors.close()
 # f_grade.close()
 # f_summary.close()
-f_image_url.close()
+# f_image_url.close()
 
 # url = "https://movie.naver.com/movie/bi/mi/basic.nhn?code=61823"
 #
