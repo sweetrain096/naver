@@ -16,6 +16,12 @@ def find_en_title(url):
     tmp_title = soup.select(
         '#content > div.article > div.mv_info_area > div.mv_info > strong'
     )
+
+    tmp_ko_title = soup.select(
+        '#content > div.article > div.mv_info_area > div.mv_info > h3.h_movie > a'
+    )
+
+    print(tmp_ko_title[0])
     # print(tmp_title)
     # print(tmp_title[0].get('title'))
     en_title = tmp_title[0].get('title')[:-6]
@@ -107,6 +113,7 @@ def actors(url):
     if tmp_actors:
         for actor in tmp_actors[0].select('a'):
             ac = actor.text
+            print(ac)
             if ac not in actorsAll :
                 actorsAll.append(ac)
             actorsnumber.append(actorsAll.index(ac)+1)
@@ -170,23 +177,23 @@ def image_url(url):
 # f_genre_id = open("./genre_id.txt", 'a')
 # f_open_date = open("./open_date.txt", 'a')
 # f_director = open("./director.txt", 'a')
-f_actors = open("./actors.txt", "a")
+# f_actors = open("./actors.txt", "a")
 # f_grade = open("./grade.txt", "a")
 # f_summary = open("./summary.txt", 'a', -1, "utf-8")
 # f_image_url = open("./imageurl.txt", 'a')
 for url in sys.stdin:
     try:
         url = str(url[:-1])
-        # print(url)
-        # find_en_title(url)
-        # find_genre(url)
-        # find_genre_id(url)
-        # open_date(url)
-        # director(url)
+        print(url)
+        find_en_title(url)
+        find_genre(url)
+        find_genre_id(url)
+        open_date(url)
+        director(url)
         actors(url)
-        # grade(url)
-        # summary(url)
-        # image_url(url)
+        grade(url)
+        summary(url)
+        image_url(url)
 
     except StopIteration:
         print("EOF")
@@ -195,7 +202,7 @@ printactors(actorsAll)
 # f_genre_id.close()
 # f_open_date.close()
 # f_director.close()
-f_actors.close()
+# f_actors.close()
 # f_grade.close()
 # f_summary.close()
 # f_image_url.close()
