@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../rain-s_python/.idea/DBs_python.iml" filepath="$PROJECT_DIR$/../rain-s_python/.idea/DBs_python.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/python_pjt.iml" filepath="$PROJECT_DIR$/.idea/python_pjt.iml" />
     </modules>
   </component>
